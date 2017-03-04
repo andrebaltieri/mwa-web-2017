@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class DataService {
-    private serviceUrl: string = 'http://localhost:54382/';
+    private serviceUrl: string = 'http://localhost:54382/';    
 
     constructor(private http: Http) { }
 
     createUser(data: any) {
+        
         return this.http
-            .post(this.serviceUrl + 'v1/customers', data)
+            .post(environment.serviceUrl + 'v1/customers', data)
             .map((res: Response) => res.json());
     }
 
