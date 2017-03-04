@@ -4,24 +4,53 @@
       <h1 class="title pacifico larger-text">
         modern web store
       </h1>
-
       <div class="columns">
         <div class="column is-half is-offset-one-quarter">
-          <p class="control">
-            <input class="input is-large" type="text" placeholder="Usuário">
-          </p>
+          <div class="notification is-danger" *ngIf="errors.length > 0">
+            <ul>
+              <li *ngFor="let error of errors">{{ error.message }}</li>
+            </ul>
+          </div>
 
-          <p class="control">
-            <input class="input is-large" type="password" placeholder="Senha">
-          </p>
+          <form [formGroup]="form">
+            <p class="control" id="usernameControl">
+              <input class="input is-large" type="username" placeholder="Usuário" formControlName="username" [ngClass]=" {'is-danger': (!form.controls.username.valid && !form.controls.username.pristine) }">
+              <span class="tag is-danger" *ngIf="!form.controls.username.valid && !form.controls.username.pristine">Usuário inválido</span>
+            </p>
 
-          <p>
-            <a class="button is-primary is-inverted is-outlined is-large is-fullwidth">ENTRAR</a>
-            <br>
-            <a class="button is-link is-fullwidth">AINDA NÃO SOU CADASTRADO</a>
-          </p>
+            <p class="control">
+              <input class="input is-large" type="password" placeholder="Senha" formControlName="password" [ngClass]=" {'is-danger': (!form.controls.password.valid && !form.controls.password.pristine) }">
+              <span class="tag is-danger" *ngIf="!form.controls.password.valid && !form.controls.password.pristine">Senha inválida</span>
+            </p>
+
+            <p>
+              <button (click)="submit()" class="button is-primary is-inverted is-outlined is-large is-fullwidth" [disabled]="!form.valid">ENTRAR</button>
+              <br>
+              <a routerLink="/signup" class="button is-link is-fullwidth">AINDA NÃO SOU CADASTRADO</a>
+            </p>
+            <hr>
+            <p>
+              <button (click)="showModal()" class="button is-link is-fullwidth">TERMOS DE USO</button>
+            </p>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="modal animated fadeIn" id="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Termos de Uso</p>
+      <button class="delete" (click)="hideModal()"></button>
+    </header>
+    <section class="modal-card-body">
+      Conteúdo do Modal
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button" (click)="hideModal()">OK</button>
+    </footer>
+  </div>
+</div>
